@@ -62,7 +62,7 @@ function App() {
       <header>
         <h1 className="text-5xl lg:text-7xl">string.normalize()</h1>
       </header>
-      <main className="h-80 flex flex-col gap-5 pt-5">
+      <main className="flex flex-col gap-5 pt-5">
         <fieldset>
           <input
             className="w-[100%] lg:w-[50%] text-3x lg:text-5xl rounded-md border-2 dark:border-white border-black"
