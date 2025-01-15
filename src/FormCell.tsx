@@ -26,7 +26,7 @@ const FormCell = ({ form, formStr = [], className }: Props) => {
         <h2 className="text-2xl">{form}</h2>
       </div>
       <div className="text-center">Length : {formStr.length}</div>
-      <div className="flex flex-row justify-start lg:justify-evenly divide-x-2 overflow-x-scroll sm:w-[100vw] lg:w-auto">
+      <div className="flex flex-row justify-start divide-x-2 overflow-x-scroll ">
         {formStr.map((char, index) => {
           const unicode = `U+${char
             .charCodeAt(0)
@@ -35,7 +35,10 @@ const FormCell = ({ form, formStr = [], className }: Props) => {
             .toUpperCase()}`;
 
           return (
-            <div key={`${char}-${index}`} className="w-20 px-2 lg:w-[100%]">
+            <div
+              key={`${char}-${index}`}
+              className="w-20 px-2 lg:w-[100%] first:ml-auto last:mr-auto"
+            >
               <Cell>{char}</Cell>
               {/* <Cell>{char.charCodeAt(0)}</Cell> */}
               <Cell>
