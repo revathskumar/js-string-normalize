@@ -73,14 +73,52 @@ function App() {
           />
         </fieldset>
 
-        <div className="grid grid-rows-1 grid-cols-1 gap-20">
-          <FormCell key="NFC" form="NFC" formStr={nStr.NFC} />
-          <FormCell key="NFD" form="NFD" formStr={nStr.NFD} />
-          <FormCell key="NFKC" form="NFKC" formStr={nStr.NFKC} />
-          <FormCell key="NFKD" form="NFKD" formStr={nStr.NFKD} />
+        <div className="flex flex-col lg:py-10 gap-5 lg:gap-0">
+          <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
+            <FormCell
+              key="NFC"
+              form="NFC"
+              formStr={nStr.NFC}
+              className="lg:mb-20"
+            />
+            <div className="border-2"></div>
+            <FormCell
+              key="NFD"
+              form="NFD"
+              formStr={nStr.NFD}
+              className="lg:mb-20"
+            />
+          </div>
+          <div className="border-2"></div>
+          <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
+            <FormCell
+              key="NFKC"
+              form="NFKC"
+              formStr={nStr.NFKC}
+              className="lg:mt-20"
+            />
+            <div className="border-2"></div>
+            <FormCell
+              key="NFKD"
+              form="NFKD"
+              formStr={nStr.NFKD}
+              className="lg:mt-20"
+            />
+          </div>
         </div>
       </main>
-      <footer></footer>
+      <footer>
+        <div className="text-center">
+          Made with <span className="text-red-600">{"\u2665"}</span> by{" "}
+          <a href="https://blog.revathskumar.com">@revathskumar</a>
+        </div>
+        <div className="text-center">
+          source code available on{" "}
+          <a href="https://codeberg.org/0x52534B/js-string-normalize">
+            Codeberg
+          </a>
+        </div>
+      </footer>
     </>
   );
 }

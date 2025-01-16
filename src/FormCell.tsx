@@ -20,7 +20,7 @@ const FormCell = ({ form, formStr = [], className }: Props) => {
   }
   return (
     <div
-      className={`flex flex-col gap-5 lg:gap-10 border-slate-400 border-2 border-radius-5 ${className}`}
+      className={`flex flex-col gap-5 lg:gap-10 border-slate-400 border-2 border-radius-5 lg:w-[40vw] lg:mx-auto ${className}`}
     >
       <div className="text-center">
         <h2 className="text-2xl">{form}</h2>
