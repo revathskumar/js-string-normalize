@@ -14,6 +14,10 @@ npm i
 npm run dev
 ```
 
+## Mirror
+
+Github: https://github.com/revathskumar/js-string-normalize
+
 ## License
 
 [MIT](/LICENSE)
