@@ -63,15 +63,23 @@ function App() {
         <h1 className="text-5xl lg:text-7xl">string.normalize()</h1>
       </header>
       <main className="flex flex-col gap-5 pt-5">
-        <fieldset>
+        <div>
+          <label
+            className="w-[100%] text-left lg:text-center block"
+            htmlFor="string"
+          >
+            Text with diacritical marks
+          </label>
           <input
+            aria-label="Text with diacritical marks"
+            placeholder="Text..."
             className="w-[100%] lg:w-[50%] text-3x lg:text-5xl rounded-md border-2 dark:border-white border-black"
             name="string"
             id="string"
             onInput={onStringInput}
             value={str}
           />
-        </fieldset>
+        </div>
 
         <div className="flex flex-col lg:py-10 gap-5 lg:gap-0">
           <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">

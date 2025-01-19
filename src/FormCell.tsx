@@ -8,10 +8,13 @@ type Props = {
 
 type CellProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
-const Cell: React.FC<CellProps> = ({ children }) => {
-  return <div className="w-[100%] h-9 text-center">{children}</div>;
+const Cell: React.FC<CellProps> = ({ children, className = "" }) => {
+  return (
+    <div className={`w-[100%] h-9 text-center ${className}`}>{children}</div>
+  );
 };
 
 const FormCell = ({ form, formStr = [], className }: Props) => {
@@ -39,7 +42,7 @@ const FormCell = ({ form, formStr = [], className }: Props) => {
               key={`${char}-${index}`}
               className="w-20 px-2 lg:w-[100%] first:ml-auto last:mr-auto"
             >
-              <Cell>{char}</Cell>
+              <Cell className="text-xl font-bold">{char}</Cell>
               {/* <Cell>{char.charCodeAt(0)}</Cell> */}
               <Cell>
                 <a
