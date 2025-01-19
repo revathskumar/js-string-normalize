@@ -37,10 +37,16 @@ const FormCell = ({ form, formStr = [], className }: Props) => {
             .padStart(4, "0")
             .toUpperCase()}`;
 
+          let hgClassname = "";
+
+          if (char.charCodeAt(0) >= 768 && char.charCodeAt(0) <= 879) {
+            hgClassname = "bg-slate-200 dark:bg-slate-800";
+          }
+
           return (
             <div
               key={`${char}-${index}`}
-              className="w-20 px-2 lg:w-[100%] first:ml-auto last:mr-auto"
+              className={`w-20 px-2 lg:w-[100%] first:ml-auto last:mr-auto ${hgClassname}`}
             >
               <Cell className="text-xl font-bold">{char}</Cell>
               {/* <Cell>{char.charCodeAt(0)}</Cell> */}
