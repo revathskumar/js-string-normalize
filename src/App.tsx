@@ -50,10 +50,10 @@ function App() {
 
   useEffect(() => {
     setNstr({
-      NFC: str.normalize("NFC").split(""),
-      NFD: str.normalize("NFD").split(""),
-      NFKC: str.normalize("NFKC").split(""),
-      NFKD: str.normalize("NFKD").split(""),
+      NFC: str.normalize(NF.NFC).split(""),
+      NFD: str.normalize(NF.NFD).split(""),
+      NFKC: str.normalize(NF.NFKC).split(""),
+      NFKD: str.normalize(NF.NFKD).split(""),
     });
   }, [str]);
 
@@ -75,35 +75,15 @@ function App() {
 
         <div className="flex flex-col lg:py-10 gap-5 lg:gap-0">
           <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
-            <FormCell
-              key="NFC"
-              form="NFC"
-              formStr={nStr.NFC}
-              className="lg:mb-20"
-            />
+            <FormCell form={NF.NFC} formStr={nStr.NFC} className="lg:mb-20" />
             <div className="border-2"></div>
-            <FormCell
-              key="NFD"
-              form="NFD"
-              formStr={nStr.NFD}
-              className="lg:mb-20"
-            />
+            <FormCell form={NF.NFD} formStr={nStr.NFD} className="lg:mb-20" />
           </div>
           <div className="border-2"></div>
           <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
-            <FormCell
-              key="NFKC"
-              form="NFKC"
-              formStr={nStr.NFKC}
-              className="lg:mt-20"
-            />
+            <FormCell form={NF.NFKC} formStr={nStr.NFKC} className="lg:mt-20" />
             <div className="border-2"></div>
-            <FormCell
-              key="NFKD"
-              form="NFKD"
-              formStr={nStr.NFKD}
-              className="lg:mt-20"
-            />
+            <FormCell form={NF.NFKD} formStr={nStr.NFKD} className="lg:mt-20" />
           </div>
         </div>
       </main>
