@@ -81,19 +81,34 @@ function App() {
           />
         </div>
 
-        <div className="flex flex-col lg:py-10 gap-5 lg:gap-0">
-          <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
-            <FormCell form={NF.NFC} formStr={nStr.NFC} className="lg:mb-20" />
+        {Boolean(str.length) && (
+          <div className="flex flex-col lg:py-10 gap-5 lg:gap-0">
+            <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
+              <FormCell form={NF.NFC} formStr={nStr.NFC} className="lg:mb-20" />
+              <div className="border-2"></div>
+              <FormCell
+                form={NF.NFD}
+                formStr={nStr.NFD}
+                className="lg:mb-20"
+                baseStr={nStr.NFC}
+              />
+            </div>
             <div className="border-2"></div>
-            <FormCell form={NF.NFD} formStr={nStr.NFD} className="lg:mb-20" />
+            <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
+              <FormCell
+                form={NF.NFKC}
+                formStr={nStr.NFKC}
+                className="lg:mt-20"
+              />
+              <div className="border-2"></div>
+              <FormCell
+                form={NF.NFKD}
+                formStr={nStr.NFKD}
+                className="lg:mt-20"
+              />
+            </div>
           </div>
-          <div className="border-2"></div>
-          <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
-            <FormCell form={NF.NFKC} formStr={nStr.NFKC} className="lg:mt-20" />
-            <div className="border-2"></div>
-            <FormCell form={NF.NFKD} formStr={nStr.NFKD} className="lg:mt-20" />
-          </div>
-        </div>
+        )}
       </main>
       <footer>
         <div className="text-center">
