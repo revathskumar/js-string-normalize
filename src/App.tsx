@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import FormCell from "./FormCell";
+import FormRow from "./FormRow";
 
 export const NF = {
   NFC: "NFC",
@@ -13,6 +14,7 @@ export type NormalisationForm = keyof typeof NF;
 
 function App() {
   const [str, setStr] = useState("");
+  const [layout, setLayout] = useState("");
   const [nStr, setNstr] = useState<{ [key in NormalisationForm]: string[] }>({
     NFC: [],
     NFD: [],
@@ -20,20 +22,24 @@ function App() {
     NFKD: [],
   });
 
-  const onPop = (evt: PopStateEvent) => {
-    const url = new URL((evt.currentTarget as Window).location.href);
+  const fromUrlToState = (href: string) => {
+    const url = new URL(href);
     const urlStr = url.searchParams.get("str");
     if (urlStr) {
       setStr(urlStr);
+    }
+    const urlLayout = url.searchParams.get("layout");
+    if (urlLayout) {
+      setLayout(urlLayout);
     }
   };
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const urlStr = url.searchParams.get("str");
-    if (urlStr) {
-      setStr(urlStr);
-    }
+    fromUrlToState(window.location.href);
+
+    const onPop = (evt: PopStateEvent) => {
+      fromUrlToState((evt.currentTarget as Window).location.href);
+    };
 
     window.addEventListener("popstate", onPop);
 
@@ -56,6 +62,8 @@ function App() {
       NFKD: str.normalize(NF.NFKD).split(""),
     });
   }, [str]);
+
+  const cols = nStr.NFKD.length;
 
   return (
     <>
@@ -81,34 +89,50 @@ function App() {
           />
         </div>
 
-        {Boolean(str.length) && (
-          <div className="flex flex-col lg:py-10 gap-5 lg:gap-0">
-            <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
-              <FormCell form={NF.NFC} formStr={nStr.NFC} className="lg:mb-20" />
-              <div className="border-2"></div>
-              <FormCell
+        {Boolean(str.length) &&
+          (layout === "compact" ? (
+            <div className="flex flex-row lg:flex-col lg:py-10 w-[98vw] overflow-x-scroll">
+              <FormRow form={NF.NFC} formStr={nStr.NFC} cols={cols} />
+              <FormRow
                 form={NF.NFD}
                 formStr={nStr.NFD}
-                className="lg:mb-20"
                 baseStr={nStr.NFC}
+                cols={cols}
               />
+              <FormRow form={NF.NFKC} formStr={nStr.NFKC} cols={cols} />
+              <FormRow form={NF.NFKD} formStr={nStr.NFKD} cols={cols} />
             </div>
-            <div className="border-2"></div>
-            <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
-              <FormCell
-                form={NF.NFKC}
-                formStr={nStr.NFKC}
-                className="lg:mt-20"
-              />
+          ) : (
+            <div className="flex flex-col lg:py-10 gap-5 lg:gap-0">
+              <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
+                <FormCell
+                  form={NF.NFC}
+                  formStr={nStr.NFC}
+                  className="lg:mb-20"
+                />
+                <div className="border-2"></div>
+                <FormCell
+                  form={NF.NFD}
+                  formStr={nStr.NFD}
+                  className="lg:mb-20"
+                />
+              </div>
               <div className="border-2"></div>
-              <FormCell
-                form={NF.NFKD}
-                formStr={nStr.NFKD}
-                className="lg:mt-20"
-              />
+              <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
+                <FormCell
+                  form={NF.NFKC}
+                  formStr={nStr.NFKC}
+                  className="lg:mt-20"
+                />
+                <div className="border-2"></div>
+                <FormCell
+                  form={NF.NFKD}
+                  formStr={nStr.NFKD}
+                  className="lg:mt-20"
+                />
+              </div>
             </div>
-          </div>
-        )}
+          ))}
       </main>
       <footer>
         <div className="text-center">
