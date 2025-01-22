@@ -35,6 +35,11 @@ function App() {
     updateParams("str", value);
   };
 
+  const handleOptionsClick = (key: FieldTypes, value: string) => {
+    urlPush(key, value);
+    updateParams(key, value);
+  };
+
   useEffect(() => {
     setNstr({
       NFC: params.str.normalize(NF.NFC).split(""),
@@ -70,6 +75,45 @@ function App() {
           />
         </div>
 
+        <div className="flex flex-col lg:flex-row gap-5 lg:gap-0 lg:justify-between lg:w-[50%] lg:m-auto">
+          <div className="flex gap-5 items-center">
+            <span className="">Example Input : </span>
+            <button
+              className="bg-slate-200 dark:bg-slate-800"
+              onClick={() => handleOptionsClick("str", "©Ⓓñ")}
+            >
+              ©Ⓓñ
+            </button>
+            <button
+              className="bg-slate-200 dark:bg-slate-800"
+              onClick={() => handleOptionsClick("str", "öéﬀ")}
+            >
+              öéﬀ
+            </button>
+            <button
+              className="bg-slate-200 dark:bg-slate-800"
+              onClick={() => handleOptionsClick("str", "I ♥ Köln")}
+            >
+              I ♥ Köln
+            </button>
+          </div>
+          <div className="flex gap-5 items-center">
+            <span className="">Layout : </span>
+            <button
+              className="bg-slate-200 dark:bg-slate-800"
+              onClick={() => handleOptionsClick("layout", "compact")}
+            >
+              Compact
+            </button>
+            <button
+              className="bg-slate-200 dark:bg-slate-800"
+              onClick={() => handleOptionsClick("layout", "")}
+            >
+              Wide
+            </button>
+          </div>
+        </div>
+
         {Boolean(params.str.length) &&
           (params.layout === "compact" ? (
             <div className="flex flex-row lg:flex-col w-[98vw] overflow-x-scroll">
@@ -84,7 +128,7 @@ function App() {
               <FormRow form={NF.NFKD} formStr={nStr.NFKD} cols={cols} />
             </div>
           ) : (
-            <div className="flex flex-col lg:py-10 gap-5 lg:gap-0">
+            <div className="flex flex-col gap-5 lg:gap-0">
               <div className="flex flex-col lg:flex-row gap-5 lg:gap-20">
                 <FormCell
                   form={NF.NFC}
@@ -115,7 +159,7 @@ function App() {
             </div>
           ))}
       </main>
-      <footer>
+      <footer className="pt-5">
         <div className="text-center">
           Related blog post on{" "}
           <a href="https://blog.revathskumar.com/2025/01/javascript-understanding-string-normalize.html">
