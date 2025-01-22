@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import FormCell from "./FormCell";
 import FormRow from "./FormRow";
+import useParams, { FieldTypes } from "./hooks/useParams";
 
 export const NF = {
   NFC: "NFC",
@@ -13,8 +14,7 @@ export const NF = {
 export type NormalisationForm = keyof typeof NF;
 
 function App() {
-  const [str, setStr] = useState("");
-  const [layout, setLayout] = useState("");
+  const { params, updateParams } = useParams();
   const [nStr, setNstr] = useState<{ [key in NormalisationForm]: string[] }>({
     NFC: [],
     NFD: [],
@@ -22,46 +22,27 @@ function App() {
     NFKD: [],
   });
 
-  const fromUrlToState = (href: string) => {
-    const url = new URL(href);
-    const urlStr = url.searchParams.get("str");
-    if (urlStr) {
-      setStr(urlStr);
-    }
-    const urlLayout = url.searchParams.get("layout");
-    if (urlLayout) {
-      setLayout(urlLayout);
-    }
-  };
-
-  useEffect(() => {
-    fromUrlToState(window.location.href);
-
-    const onPop = (evt: PopStateEvent) => {
-      fromUrlToState((evt.currentTarget as Window).location.href);
-    };
-
-    window.addEventListener("popstate", onPop);
-
-    return () => window.removeEventListener("popstate", onPop);
-  }, []);
-
-  const onStringInput = (e: React.FormEvent<HTMLInputElement>) => {
+  const urlPush = function (key: FieldTypes, value: string) {
     const url = new URL(window.location.href);
 
-    url.searchParams.set("str", e.currentTarget.value);
+    url.searchParams.set(key, value);
     window.history.pushState({}, "", url);
-    setStr(e.currentTarget.value);
+  };
+
+  const onStringInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    urlPush("str", value);
+    updateParams("str", value);
   };
 
   useEffect(() => {
     setNstr({
-      NFC: str.normalize(NF.NFC).split(""),
-      NFD: str.normalize(NF.NFD).split(""),
-      NFKC: str.normalize(NF.NFKC).split(""),
-      NFKD: str.normalize(NF.NFKD).split(""),
+      NFC: params.str.normalize(NF.NFC).split(""),
+      NFD: params.str.normalize(NF.NFD).split(""),
+      NFKC: params.str.normalize(NF.NFKC).split(""),
+      NFKD: params.str.normalize(NF.NFKD).split(""),
     });
-  }, [str]);
+  }, [params.str]);
 
   const cols = nStr.NFKD.length;
 
@@ -85,13 +66,13 @@ function App() {
             name="string"
             id="string"
             onInput={onStringInput}
-            value={str}
+            value={params.str}
           />
         </div>
 
-        {Boolean(str.length) &&
-          (layout === "compact" ? (
-            <div className="flex flex-row lg:flex-col lg:py-10 w-[98vw] overflow-x-scroll">
+        {Boolean(params.str.length) &&
+          (params.layout === "compact" ? (
+            <div className="flex flex-row lg:flex-col w-[98vw] overflow-x-scroll">
               <FormRow form={NF.NFC} formStr={nStr.NFC} cols={cols} />
               <FormRow
                 form={NF.NFD}
