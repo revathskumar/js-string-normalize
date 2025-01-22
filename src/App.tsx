@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import FormCell from "./FormCell";
-import FormRow from "./FormRow";
+import FormCell from "./components/FormCell";
+import FormRow from "./components/FormRow";
 import useParams, { FieldTypes } from "./hooks/useParams";
 
 export const NF = {

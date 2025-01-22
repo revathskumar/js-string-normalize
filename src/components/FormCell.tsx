@@ -1,20 +1,10 @@
-import { NormalisationForm } from "./App";
+import { NormalisationForm } from "../App";
+import CellWrapper from "./CellWrapper";
 
 type Props = {
   form: NormalisationForm;
   formStr: string[];
   className?: string;
-};
-
-type CellProps = {
-  children: React.ReactNode;
-  className?: string;
-};
-
-const Cell: React.FC<CellProps> = ({ children, className = "" }) => {
-  return (
-    <div className={`w-[100%] h-9 text-center ${className}`}>{children}</div>
-  );
 };
 
 const FormCell = ({ form, formStr = [], className }: Props) => {
@@ -31,34 +21,20 @@ const FormCell = ({ form, formStr = [], className }: Props) => {
       <div className="text-center">Length : {formStr.length}</div>
       <div className="flex flex-row justify-start divide-x-2 overflow-x-scroll ">
         {formStr.map((char, index) => {
-          const unicode = `U+${char
-            .charCodeAt(0)
-            .toString(16)
-            .padStart(4, "0")
-            .toUpperCase()}`;
-
-          let hgClassname = "";
-
-          if (char.charCodeAt(0) >= 768 && char.charCodeAt(0) <= 879) {
-            hgClassname = "bg-slate-200 dark:bg-slate-800";
-          }
-
           return (
-            <div
+            <CellWrapper
               key={`${char}-${index}`}
-              className={`w-20 px-2 lg:w-[100%] first:ml-auto last:mr-auto ${hgClassname}`}
-            >
-              <Cell className="text-xl font-bold">{char}</Cell>
-              {/* <Cell>{char.charCodeAt(0)}</Cell> */}
-              <Cell>
+              char={char}
+              className={`w-20 px-2 lg:w-[100%] first:ml-auto last:mr-auto`}
+              renderUnicode={(unicode: string) => (
                 <a
                   target="_blank"
                   href={`https://www.compart.com/en/unicode/${unicode}`}
                 >
                   {unicode}
                 </a>
-              </Cell>
-            </div>
+              )}
+            />
           );
         })}
       </div>
