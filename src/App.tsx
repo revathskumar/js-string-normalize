@@ -117,6 +117,12 @@ function App() {
       </main>
       <footer>
         <div className="text-center">
+          Related blog post on{" "}
+          <a href="https://blog.revathskumar.com/2025/01/javascript-understanding-string-normalize.html">
+            blog.revathskumar.com
+          </a>
+        </div>
+        <div className="text-center">
           Made with <span className="text-red-600">{"\u2665"}</span> by{" "}
           <a href="https://blog.revathskumar.com">@revathskumar</a>
         </div>
