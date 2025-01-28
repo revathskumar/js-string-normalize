@@ -6,7 +6,13 @@ const ACTION_TYPES = {
 
 type ActionTypes = (typeof ACTION_TYPES)[keyof typeof ACTION_TYPES];
 
-export type FieldTypes = "str" | "layout";
+const FIELDS = {
+  STR: "str",
+  LAYOUT: "layout",
+} as const;
+
+
+export type FieldTypes = (typeof FIELDS)[keyof typeof FIELDS];
 
 type State = {
   [key in FieldTypes]: string;
@@ -18,19 +24,16 @@ type Action = {
   value: string;
 };
 
-export default function useParams() {
-  const [params, dispatch] = useReducer(
-    (state: State, action: Action) => {
-      switch (action.type) {
-        case ACTION_TYPES.UPDATE_PARAM:
-          return { ...state, [action.key]: action.value };
+export default function useParams(initState: State) {
+  const [params, dispatch] = useReducer((state: State, action: Action) => {
+    switch (action.type) {
+      case ACTION_TYPES.UPDATE_PARAM:
+        return { ...state, [action.key]: action.value };
 
-        default:
-          return state;
-      }
-    },
-    { str: "", layout: "" }
-  );
+      default:
+        return state;
+    }
+  }, initState);
 
   const updateParams = (key: FieldTypes, value: string) =>
     dispatch({
@@ -42,12 +45,10 @@ export default function useParams() {
   useEffect(() => {
     const fromUrlToState = (href: string) => {
       const url = new URL(href);
-      const urlStr = url.searchParams.get("str");
-      updateParams("str", urlStr || "");
-
-      const urlLayout = url.searchParams.get("layout");
-
-      updateParams("layout", urlLayout || "");
+      Object.values(FIELDS).map(field => {
+        const urlField = url.searchParams.get(field);
+        updateParams(field, urlField || "");
+      });
     };
 
     fromUrlToState(window.location.href);

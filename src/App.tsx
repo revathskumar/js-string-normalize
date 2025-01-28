@@ -14,7 +14,7 @@ export const NF = {
 export type NormalisationForm = (typeof NF)[keyof typeof NF];
 
 function App() {
-  const { params, updateParams } = useParams();
+  const { params, updateParams } = useParams({ str: "", layout: "" });
   const [nStr, setNstr] = useState<{ [key in NormalisationForm]: string[] }>({
     NFC: [],
     NFD: [],
