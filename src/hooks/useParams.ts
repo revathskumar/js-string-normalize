@@ -4,7 +4,7 @@ const ACTION_TYPES = {
   UPDATE_PARAM: "UPDATE_PARAM",
 } as const;
 
-type ActionTypes = keyof typeof ACTION_TYPES;
+type ActionTypes = (typeof ACTION_TYPES)[keyof typeof ACTION_TYPES];
 
 export type FieldTypes = "str" | "layout";
 

@@ -11,7 +11,7 @@ export const NF = {
   NFKD: "NFKD",
 } as const;
 
-export type NormalisationForm = keyof typeof NF;
+export type NormalisationForm = (typeof NF)[keyof typeof NF];
 
 function App() {
   const { params, updateParams } = useParams();
